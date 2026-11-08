@@ -1,8 +1,8 @@
 # Publication procedure and initial review
 
-Publication update: the owner explicitly approved committing and pushing. Initial implementation commit `597ad52` was successfully pushed to `main` at https://github.com/mehdifassifihri/advanced-rag. Earlier repository-state notes below describe the prepublication review. No license, tag, GitHub release or Upwork submission was created.
+Publication update: the owner explicitly approved committing and pushing. Initial implementation commit `597ad52` was successfully pushed to `main` at https://github.com/mehdifassifihri/enterprise-rag-knowledge-engine. Earlier repository-state notes below describe the prepublication review. No license, tag, GitHub release or Upwork submission was created.
 
-Suggested descriptive name: `enterprise-knowledge-engine`. The user-supplied intended target is `https://github.com/mehdifassifihri/advanced-rag.git`; preserve that target unless its owner chooses to rename it. Read-only `git ls-remote` succeeded and advertised no refs. It does not establish a published, reviewable project or public visibility. Locally there is no HEAD commit and no configured remote; intended source files are untracked. A clean Git status is therefore **not achieved**.
+The owner selected `enterprise-rag-knowledge-engine` as the repository name. The current target is `https://github.com/mehdifassifihri/enterprise-rag-knowledge-engine.git`. Older prepublication notes below are historical and do not describe the current published repository.
 
 Suggested description: “Tenant-scoped document ingestion, PostgreSQL hybrid retrieval, cited RAG answers, local MCP tools and reproducible evaluation.”
 
@@ -46,7 +46,7 @@ git diff --cached
 git commit -m "Initial Enterprise Knowledge Engine portfolio release"
 git branch -M main
 # Confirm URL, ownership and remote state first; local origin is currently absent:
-git remote add origin https://github.com/mehdifassifihri/advanced-rag.git
+git remote add origin https://github.com/mehdifassifihri/enterprise-rag-knowledge-engine.git
 git ls-remote origin
 # If the remote gained commits, reconcile them; never force-push over remote work.
 # Separate explicit approval is still required before executing this publication:

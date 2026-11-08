@@ -81,3 +81,5 @@ Known examples and reports use synthetic business data. Architecture links were 
 - Updated `docs/SECURITY.md` with final review evidence/limits. No database schema, production API behavior or external-provider adapter was changed.
 
 Ready for a transparent technical discussion with these caveats; not yet a fully reverified published release. Publication procedure is in [PUBLICATION.md](PUBLICATION.md).
+
+Repository naming update: the current repository is [enterprise-rag-knowledge-engine](https://github.com/mehdifassifihri/enterprise-rag-knowledge-engine). The earlier read-only command above retains its original URL as historical verification evidence.

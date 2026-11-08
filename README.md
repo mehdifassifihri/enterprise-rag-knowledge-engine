@@ -2,6 +2,8 @@
 
 A tenant-scoped knowledge workspace: a Next.js SaaS frontend over a Python API for document ingestion, hybrid retrieval and source-cited answers, with local MCP tools and reproducible evaluation.
 
+[GitHub repository](https://github.com/mehdifassifihri/enterprise-rag-knowledge-engine)
+
 ## SaaS workspace
 
 Six working pages: overview, knowledge base, cited AI assistant, retrieval playground, evaluation lab, and settings/integrations. The latest UI verification passed **30 frontend tests and five real-browser scenarios**, plus typecheck, lint and a production build; earlier backend verification is recorded in the linked phase reports. The UI uses real API responses and reviewed evaluation artifacts; it does not generate activity or benchmark data. Credentials remain in a password-protected Next.js server-side proxy bound to one tenant.
