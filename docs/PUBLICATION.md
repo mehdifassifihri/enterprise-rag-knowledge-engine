@@ -1,5 +1,7 @@
 # Publication procedure and initial review
 
+Publication update: the owner explicitly approved committing and pushing. Initial implementation commit `597ad52` was successfully pushed to `main` at https://github.com/mehdifassifihri/advanced-rag. Earlier repository-state notes below describe the prepublication review. No license, tag, GitHub release or Upwork submission was created.
+
 Suggested descriptive name: `enterprise-knowledge-engine`. The user-supplied intended target is `https://github.com/mehdifassifihri/advanced-rag.git`; preserve that target unless its owner chooses to rename it. Read-only `git ls-remote` succeeded and advertised no refs. It does not establish a published, reviewable project or public visibility. Locally there is no HEAD commit and no configured remote; intended source files are untracked. A clean Git status is therefore **not achieved**.
 
 Suggested description: “Tenant-scoped document ingestion, PostgreSQL hybrid retrieval, cited RAG answers, local MCP tools and reproducible evaluation.”
