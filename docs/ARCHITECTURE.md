@@ -2,6 +2,12 @@
 
 Phase 8 adds a Next.js browser workspace and an authenticated, server-only BFF over these services, plus three read-only tenant-scoped HTTP endpoints. See [frontend architecture](FRONTEND.md) and [Phase 8 verification](verification-phase8.md). The decisions below preserve the earlier backend design.
 
+![Simplified backend architecture](diagrams/backend-architecture.png)
+
+[Edit in Excalidraw](diagrams/backend-architecture.excalidraw) · [PNG](diagrams/backend-architecture.png) · [Diagram legend](diagrams/README.md)
+
+Detailed service flow:
+
 ```mermaid
 flowchart TD
   D[Business documents: PDF / TXT / Markdown] --> A[Authenticated upload]

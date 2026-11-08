@@ -102,19 +102,11 @@ OpenAI and Cohere adapters are implemented and mocked in tests; paid connectivit
 
 ## Architecture
 
-```mermaid
-flowchart LR
-  A[Authenticated upload] --> B[Extract and chunk]
-  B --> C[Embed]
-  C --> D[(PostgreSQL + pgvector + FTS)]
-  D --> E[Vector / keyword / RRF]
-  E --> F[Optional rerank]
-  F --> G[Bounded context]
-  G --> H[Structured LLM]
-  H --> I[Citation validation / abstention]
-  M[Local stdio MCP] --> E
-  M --> G
-```
+![Excalidraw backend architecture showing authenticated FastAPI access, shared ingestion and hybrid RAG services, PostgreSQL with pgvector, AI providers and cited responses](docs/diagrams/backend-architecture.png)
+
+**Flow:** client → authenticated FastAPI → shared ingestion, retrieval and grounded-answer services. PostgreSQL stores tenant-scoped documents, chunks and vectors; external providers supply embeddings, chat and optional reranking. Source checks support traceability, not a guarantee of factual correctness.
+
+[Editable Excalidraw source](docs/diagrams/backend-architecture.excalidraw) · [Full-size diagram](docs/diagrams/backend-architecture.png)
 
 [Detailed architecture and decisions](docs/ARCHITECTURE.md).
 
