@@ -1,4 +1,6 @@
-# Final capability audit — 2026-11-08
+# Final capability audit — Phase 7, 2026-11-08
+
+Historical Phase 7 snapshot. Phase 8 now implements and verifies the frontend; see [Phase 8 verification](verification-phase8.md) for the current UI, additional endpoints and 308-test backend result.
 
 Evidence is scoped: publication verification now passes all 307 PostgreSQL-backed tests and both demo scripts; earlier blocked attempts are retained in FINAL_VERIFICATION. “Verified working” below identifies the executed scope, not deployment readiness. No serious code defect was demonstrated by current offline checks; README length, stale dependency wording and architecture naming were documentation defects corrected here.
 

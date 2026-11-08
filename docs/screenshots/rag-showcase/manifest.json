@@ -1,0 +1,20 @@
+{
+  "captured_at": "2026-11-08T19:51:39.047Z",
+  "viewport": {
+    "width": 1440,
+    "height": 1100
+  },
+  "corpus": "examples/qa/*.md (three fictional public documents)",
+  "providers": "Deterministic DemoEmbeddings and DemoLLM; not real-model quality evidence",
+  "transport": "Chromium -> Next.js BFF -> FastAPI -> PostgreSQL/pgvector",
+  "answer_citations_verified_against_stored_chunks": 2,
+  "abstention_verified": true,
+  "captures": [
+    "01-knowledge-base",
+    "02-source-chunks",
+    "03-hybrid-retrieval",
+    "04-grounded-answer",
+    "05-insufficient-evidence",
+    "06-evaluation"
+  ]
+}

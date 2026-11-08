@@ -15,3 +15,14 @@ build/
 
 # Local evaluation outputs may contain sensitive provider answers. Publish reviewed synthetic reports only.
 evaluation/results/
+
+# Next.js workspace
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
+frontend/playwright-report/
+frontend/test-results/
+frontend/.env*
+!frontend/.env.example

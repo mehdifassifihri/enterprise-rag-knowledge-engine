@@ -12,7 +12,19 @@ PATTERNS = [
         r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
     ]
 ]
-EXCLUDED = {".git", ".venv", ".pytest_cache", ".ruff_cache", "__pycache__", "build", "dist"}
+EXCLUDED = {
+    ".git",
+    ".venv",
+    ".pytest_cache",
+    ".ruff_cache",
+    "__pycache__",
+    "build",
+    "dist",
+    "node_modules",
+    ".next",
+    "test-results",
+    "playwright-report",
+}
 
 
 def scan(root: Path) -> list[str]:

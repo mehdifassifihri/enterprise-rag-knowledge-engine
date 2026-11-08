@@ -6,7 +6,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-eke}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
     ports:
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -38,6 +38,26 @@ services:
       interval: 10s
       timeout: 6s
       retries: 3
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+  frontend:
+    profiles: [ui]
+    build: ./frontend
+    environment:
+      BACKEND_URL: http://api:8000
+      BACKEND_API_KEY: ${FRONTEND_BACKEND_API_KEY:-}
+      APP_ORIGIN: ${FRONTEND_APP_ORIGIN:-http://localhost:3000}
+      DEMO_PASSWORD: ${FRONTEND_DEMO_PASSWORD:-}
+      SESSION_SECRET: ${FRONTEND_SESSION_SECRET:-}
+      EVALUATION_REPORT_DIR: /reports
+    volumes:
+      - ./evaluation/reports/local-keyword:/reports:ro
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
     security_opt:
       - no-new-privileges:true
     cap_drop: [ALL]

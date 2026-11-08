@@ -2,12 +2,18 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, File, Query, Request, Response, UploadFile
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from enterprise_knowledge_engine.core.security import TenantIdentity
-from enterprise_knowledge_engine.db.models import Document
+from enterprise_knowledge_engine.db.models import Document, DocumentChunk
 from enterprise_knowledge_engine.db.session import DatabaseSession
-from enterprise_knowledge_engine.documents.schemas import DocumentList, DocumentResponse
+from enterprise_knowledge_engine.documents.schemas import (
+    ChunkPage,
+    ChunkPreview,
+    DocumentList,
+    DocumentResponse,
+    DocumentStats,
+)
 from enterprise_knowledge_engine.documents.service import read_documents
 from enterprise_knowledge_engine.ingestion.embeddings import (
     EmbeddingProvider,
@@ -47,6 +53,75 @@ def list_documents(
     offset: Annotated[int, Query(ge=0, le=100000)] = 0,
 ) -> DocumentList:
     return read_documents(session, tenant_id, limit, offset)
+
+
+@router.get("/stats", response_model=DocumentStats)
+def document_stats(tenant_id: TenantIdentity, session: DatabaseSession) -> DocumentStats:
+    # Count actual rows rather than summing potentially stale document metadata.
+    documents = (
+        session.scalar(
+            select(func.count()).select_from(Document).where(Document.tenant_id == tenant_id)
+        )
+        or 0
+    )
+    ready = (
+        session.scalar(
+            select(func.count())
+            .select_from(Document)
+            .where(Document.tenant_id == tenant_id, Document.status == "ready")
+        )
+        or 0
+    )
+    failed = (
+        session.scalar(
+            select(func.count())
+            .select_from(Document)
+            .where(Document.tenant_id == tenant_id, Document.status == "failed")
+        )
+        or 0
+    )
+    chunks = (
+        session.scalar(
+            select(func.count())
+            .select_from(DocumentChunk)
+            .join(
+                Document,
+                (Document.id == DocumentChunk.document_id)
+                & (Document.tenant_id == DocumentChunk.tenant_id),
+            )
+            .where(DocumentChunk.tenant_id == tenant_id, Document.tenant_id == tenant_id)
+        )
+        or 0
+    )
+    return DocumentStats(documents=documents, ready=ready, failed=failed, chunks=chunks)
+
+
+@router.get("/{document_id}/chunks", response_model=ChunkPage)
+def document_chunks(
+    document_id: UUID,
+    tenant_id: TenantIdentity,
+    session: DatabaseSession,
+    limit: Annotated[int, Query(ge=1, le=20)] = 10,
+    offset: Annotated[int, Query(ge=0, le=100000)] = 0,
+) -> ChunkPage:
+    find_document(session, tenant_id, document_id)
+    rows = session.execute(
+        select(
+            DocumentChunk.id,
+            DocumentChunk.document_id,
+            DocumentChunk.position,
+            func.substr(DocumentChunk.content, 1, 2000).label("content"),
+            DocumentChunk.page_number,
+            DocumentChunk.start_offset,
+            DocumentChunk.end_offset,
+            (func.length(DocumentChunk.content) > 2000).label("truncated"),
+        )
+        .where(DocumentChunk.tenant_id == tenant_id, DocumentChunk.document_id == document_id)
+        .order_by(DocumentChunk.position, DocumentChunk.id)
+        .limit(limit)
+        .offset(offset)
+    ).mappings()
+    return ChunkPage(items=[ChunkPreview(**row) for row in rows], limit=limit, offset=offset)
 
 
 @router.get("/{document_id}", response_model=DocumentResponse)

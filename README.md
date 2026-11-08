@@ -1,6 +1,86 @@
 # Enterprise Knowledge Engine
 
-A Python API for tenant-scoped document ingestion, hybrid retrieval and source-cited question answering, with a local MCP adapter and reproducible evaluation framework.
+A tenant-scoped knowledge workspace: a Next.js SaaS frontend over a Python API for document ingestion, hybrid retrieval and source-cited answers, with local MCP tools and reproducible evaluation.
+
+## SaaS workspace
+
+Six working pages: overview, knowledge base, cited AI assistant, retrieval playground, evaluation lab, and settings/integrations. The latest UI verification passed **30 frontend tests and five real-browser scenarios**, plus typecheck, lint and a production build; earlier backend verification is recorded in the linked phase reports. The UI uses real API responses and reviewed evaluation artifacts; it does not generate activity or benchmark data. Credentials remain in a password-protected Next.js server-side proxy bound to one tenant.
+
+```sh
+# First configure/migrate/provision the backend as described below, then make run.
+cd frontend
+npm ci
+cp .env.example .env.local
+# Configure server-only tenant key, APP_ORIGIN, demo password and signing secret.
+npm run dev
+# Open http://localhost:3000/login
+```
+
+[Frontend architecture, security, setup and exact 90-second walkthrough](docs/FRONTEND.md) · [Phase 8 verification](docs/verification-phase8.md)
+
+For a free, real browser → Next.js → FastAPI → PostgreSQL integration demo using explicitly controlled providers: build the frontend, install Playwright Chromium, then run `.venv/bin/python scripts/demo_frontend.py` from the root against a migrated disposable database. Add `--interactive` to explore it manually. Scripted fixture outputs are not semantic-quality evidence.
+
+Actual synthetic-demo screenshots and reproduction instructions are in [the screenshot guide](docs/screenshots/README.md). They were captured from the running application, not generated design mockups.
+
+## RAG in action
+
+**Upload → extract & chunk → retrieve → answer with citations → inspect the evidence.**
+
+These are unmodified screenshots of the running application at **1440 × 1100**, using three fictional documents from [`examples/qa/`](examples/qa/). The browser, authenticated proxy, API, PostgreSQL queries, stored chunks and citation checks are real. **Embeddings and answers use deterministic demo providers**, explicitly labeled in the UI: these screenshots demonstrate the workflow, not real-model relevance, hallucination resistance or semantic benchmark quality. The evaluation image displays the separately executed keyword benchmark.
+
+### 1 · Build a searchable knowledge base
+
+![Knowledge base showing three uploaded fictional documents, ready ingestion states and persisted chunk counts](docs/screenshots/rag-showcase/01-knowledge-base.png)
+
+**Labels:** **Ready** = ingestion completed successfully · **Chunks** = persisted searchable passages · **Uploaded** = stored upload timestamp. PDF, TXT and Markdown uploads use the same validated ingestion API; this capture uses Markdown fixtures.
+
+### 2 · Inspect the source passages
+
+![Document inspector showing the original fictional returns passage, document identity, SHA-256 hash and controlled embedding model](docs/screenshots/rag-showcase/02-source-chunks.png)
+
+**Labels:** **SHA-256** identifies the uploaded content · **Embedding model** records the provider used for indexing · **Chunk / offset** locates a stored passage. Markdown has no PDF page number; the UI reports that explicitly. Original upload bytes are not retained.
+
+### 3 · See what hybrid retrieval actually returns
+
+![Hybrid search for retail returns showing the retrieved passage, vector and keyword provenance, cosine distance and RRF ranking score](docs/screenshots/rag-showcase/03-hybrid-retrieval.png)
+
+**Score legend:** **Vector + keyword** identifies the candidate sources · **Cosine distance** is lower for closer vectors · **Keyword rank** is PostgreSQL's lexical relevance score · **RRF** combines ranking positions with k=60. RRF is **not a probability**. The identical fixture vectors are not semantic evidence; this view demonstrates the executed SQL retrieval and fusion pipeline. The displayed elapsed time includes browser/proxy/network overhead and is not a capacity benchmark.
+
+### 4 · Answer across documents, then inspect each citation
+
+![Two-source answer to a fictional returns question with inline citations and the selected portal document's original supporting quote](docs/screenshots/rag-showcase/04-grounded-answer.png)
+
+**Question:** “What is the retail returns policy and how do I submit the order information?”
+
+| On-screen label | What it demonstrates |
+|---|---|
+| **Inline S# references** | Clickable IDs assigned to supplied retrieved chunks; only the cited subset appears in the answer. |
+| **2 cited sources** | The response uses the separate eligibility policy and submission-process document. |
+| **Source explorer** | The selected source's filename, document/chunk IDs, offsets and supporting excerpt. |
+| **Supporting quote** | Both returned citations were checked against actual stored chunks during capture. Quote membership establishes traceability, not proof that every claim is entailed. |
+
+The wording is produced by the explicitly scripted demo adapter. Real OpenAI generation follows the same retrieval/context/citation interfaces but is not evaluated by this image.
+
+### 5 · Abstain when the available evidence cannot answer
+
+![An unsupported executive bonus question returning insufficient evidence, zero cited sources and no invented answer](docs/screenshots/rag-showcase/05-insufficient-evidence.png)
+
+**Labels:** **Insufficient evidence** is an explicit answer status · **0 cited sources** means no answer citations are returned. This controlled scenario verifies response handling and the UI's abstention state; it does not measure how reliably a real model detects missing evidence.
+
+### 6 · Measure retrieval quality honestly
+
+![Evaluation lab displaying actual keyword Recall, MRR, nDCG and hit-rate measurements across retrieval cutoffs](docs/screenshots/rag-showcase/06-evaluation.png)
+
+**Metric legend:** **Recall@K** measures relevant-document coverage · **MRR@K** rewards the first relevant result within the cutoff · **nDCG@K** accounts for graded relevance and rank · **Hit rate@K** measures queries with at least one relevant result. The K=5 cards show the measured keyword baseline over **26 eligible positive questions** from the separate **34-question benchmark**, not the three-document screenshot corpus. Vector/hybrid/reranking comparisons remain pending; these low lexical scores are not presented as a quality success.
+
+**Reproduce the gallery:** after building the frontend and configuring a migrated local PostgreSQL/pgvector database, run:
+
+```sh
+.venv/bin/python scripts/demo_frontend.py --screenshots
+```
+
+The capture command creates an isolated tenant, uploads only public fictional fixtures, verifies two stored-source citations and abstention, writes six PNGs plus a [capture manifest](docs/screenshots/rag-showcase/manifest.json), and removes its temporary tenant on normal exit. It makes **no paid AI calls** and does not change the regular workspace. [Screenshot provenance and setup](docs/screenshots/README.md).
+
 
 ## Problem
 
@@ -8,7 +88,7 @@ Company knowledge is spread across files. Useful answers require finding relevan
 
 ## Verified capabilities
 
-The current publication verification passes **307 tests** against PostgreSQL 16/pgvector, including 65 integration tests. The synthetic API and official MCP subprocess demos pass, and Alembic reports no schema drift. These checks verify local behavior with controlled providers; see [final audit](docs/FINAL_AUDIT.md) and [verification](docs/FINAL_VERIFICATION.md).
+The previous publication verification passed **307 tests** against PostgreSQL 16/pgvector, including 65 integration tests. The synthetic API and official MCP subprocess demos pass, and Alembic reports no schema drift. These checks verify local behavior with controlled providers; see [final audit](docs/FINAL_AUDIT.md) and [verification](docs/FINAL_VERIFICATION.md).
 
 - PDF/TXT/Markdown validation, bounded extraction and overlapping chunks.
 - Tenant-scoped persistence, duplicate hashes, atomic ready/failed states and reprocessing.
@@ -16,7 +96,7 @@ The current publication verification passes **307 tests** against PostgreSQL 16/
 - Structured answer parsing, authorized source IDs, exact supporting quotes and safe errors.
 - Strict local MCP tools, bounded evaluation metrics and security regression tests.
 
-OpenAI and Cohere adapters are implemented and mocked in tests; paid connectivity and real-model quality are pending. No cloud deployment, knowledge graph or persistent memory is claimed.
+OpenAI and Cohere adapters are implemented and mocked in tests; paid connectivity and real-model quality are pending. No cloud deployment, knowledge graph or persistent memory is claimed. The backend and new frontend remain subject to the verification boundaries described below.
 
 ## Architecture
 
@@ -38,11 +118,11 @@ flowchart LR
 
 ## Stack
 
-Python 3.12+, FastAPI, Pydantic v2, SQLAlchemy 2, Alembic, PostgreSQL 16, pgvector >=0.8, pypdf, OpenAI SDK, official MCP SDK 1.30.0, pytest, Ruff and Docker Compose. Runtime/dev lock files pin Python packages; image tags and artifact hashes remain a reproducibility limitation.
+Next.js 16, React 19, TypeScript, Tailwind, shadcn-style Radix components, TanStack Query, Recharts, Zod; Python 3.12+, FastAPI, Pydantic v2, SQLAlchemy 2, Alembic, PostgreSQL 16, pgvector >=0.8, pypdf, OpenAI SDK, official MCP SDK 1.30.0, pytest, Ruff and Docker Compose. Runtime/dev lock files pin Python packages; image tags and artifact hashes remain a reproducibility limitation.
 
 ## Quick start
 
-Docker Engine + Compose and Python 3.12+ are prerequisites. Docker execution has not been verified locally.
+Docker Engine + Compose and Python 3.12+ are prerequisites. The Compose PostgreSQL/pgvector service has been exercised locally; full API/frontend container builds remain unverified.
 
 ```sh
 make setup
@@ -103,6 +183,8 @@ Trusted environment key bindings, constant-time credential comparison, SQL tenan
 | POST | `/api/v1/documents/upload` | Multipart file, optional reprocess |
 | GET | `/api/v1/documents` | Bounded list: limit/offset |
 | GET / DELETE | `/api/v1/documents/{id}` | Tenant-owned metadata / deletion |
+| GET | `/api/v1/documents/stats`, `/api/v1/documents/{id}/chunks` | Tenant aggregates / bounded source previews |
+| GET | `/api/v1/capabilities` | Safe provider/limit configuration |
 | POST | `/api/v1/search` | vector, keyword or hybrid retrieval |
 | POST | `/api/v1/ask` | Cited answer / abstention / error |
 
@@ -135,7 +217,7 @@ make evaluate-validate
 make audit
 ```
 
-Automated tests mock paid APIs. CI defines Python 3.12/3.13 checks, PostgreSQL integration, migration roundtrips, advisory scanning and Docker build. Remote CI status is unverified. [Exact local evidence](docs/FINAL_VERIFICATION.md).
+Automated tests mock paid APIs. CI defines Python 3.12/3.13 checks, PostgreSQL integration, migration roundtrips, advisory scanning and Docker build. A frontend CI job additionally defines typecheck/lint/component/security checks, production build and real browser/PostgreSQL integration. Remote CI status is unverified. [Exact local evidence](docs/FINAL_VERIFICATION.md).
 
 ## Engineering tradeoffs
 
@@ -143,7 +225,7 @@ Synchronous ingestion holds DB transactions during inference, keeping atomic beh
 
 ## Known limitations
 
-No OCR, durable queue, source object storage, knowledge graph, persistent conversation memory, frontend or deployed cloud environment. Real embedding/chat/rerank quality and cost are unverified; citation checks do not prove factual support. Docker build/start and remote CI remain unexecuted locally. Licensing is pending owner decision; no MIT grant is implied.
+No OCR, durable queue, source object storage, knowledge graph, persistent conversation memory or deployed cloud environment. The frontend demo is single-tenant; it does not implement multi-user SaaS identity. Real embedding/chat/rerank quality and cost are unverified; citation checks do not prove factual support. Full API/frontend container builds and remote CI remain unexecuted locally. Licensing is pending owner decision; no MIT grant is implied.
 
 ## Next improvements
 

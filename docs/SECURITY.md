@@ -72,3 +72,10 @@ The current offline security/unit run passes within 242 total unit tests; the co
 License declarations are inventoried in [DEPENDENCY_LICENSES.md](DEPENDENCY_LICENSES.md); owner licensing remains pending. All source files remain untracked locally, with no commits/staged files and no configured remote. Review the intended staged snapshot and full imported history with a dedicated secret scanner before publication. No files, credentials, customer data or logs have been pushed. The dependency advisory snapshot is retained from Phase 6, not refreshed here.
 
 Publication verification update: approval review became available and the complete 307-test PostgreSQL suite plus synthetic API/MCP demos passed; Alembic upgrade/check passed. Earlier Phase 7 blocked-attempt notes remain historical. Real-model, deployment and advisory-refresh limitations are unchanged.
+
+
+## Phase 8 browser boundary
+
+Next.js adds a server-only, allowlisted BFF using one configured tenant-bound API key. The browser receives an HTTP-only signed demo cookie, not backend credentials, and cannot choose a tenant or upstream URL. All writes require the exact configured origin. Actual request-byte limits, strict search/ask schemas, no-store responses, React text rendering and sanitized upstream errors limit specific attack paths. The backend still enforces authentication and SQL ownership for the new aggregate/chunk endpoints. Controlled browser tests verify upload/search/citation behavior, forbidden cross-origin writes, unauthenticated BFF rejection and credential separation; they do not prove real-model security.
+
+This is a shared local demo, not user identity/role management. Protect remote deployment with proper authentication, user-to-tenant authorization, TLS and gateway rate/admission controls. No distributed login limiter, per-session revocation or strict nonce CSP was added. Provider configuration flags are not live connectivity probes. Only reviewed synthetic evaluation artifacts should be mounted into the frontend. See [FRONTEND.md](FRONTEND.md) for the exact security and operating boundaries.

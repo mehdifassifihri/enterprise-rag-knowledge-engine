@@ -58,3 +58,15 @@ audit:
 .PHONY: demo-portfolio
 demo-portfolio:
 	bash demo/demo_requests.sh
+
+.PHONY: frontend-setup frontend-dev frontend-check frontend-build demo-frontend
+frontend-setup:
+	cd frontend && npm ci
+frontend-dev:
+	cd frontend && npm run dev
+frontend-check:
+	cd frontend && npm run typecheck && npm run lint && npm run format:check && npm test
+frontend-build:
+	cd frontend && npm run build && npm run check:client
+demo-frontend:
+	$(BIN)/python scripts/demo_frontend.py

@@ -7,6 +7,19 @@ from enterprise_knowledge_engine.qa.schemas import Citation, GeneratedAnswer
 _CITATION_MARKER = re.compile(r"\[s[^\]]*\]", re.IGNORECASE)
 
 
+def _source_quote(quote: str, content: str) -> str | None:
+    """Match literal words allowing layout whitespace; return the original source span."""
+    if not quote:
+        return None
+    if quote in content:
+        return quote
+    # PDF line wraps often become spaces in generated quotes. No case folding,
+    # punctuation changes, omitted words, or fuzzy matching are permitted.
+    pattern = r"\s+".join(re.escape(part) for part in quote.split())
+    match = re.search(pattern, content) if pattern else None
+    return match.group(0) if match else None
+
+
 def validate_and_render(
     output: GeneratedAnswer, context: ContextBundle
 ) -> tuple[str, list[Citation]]:
@@ -20,7 +33,8 @@ def validate_and_render(
         for evidence in claim.evidence:
             source = allowed.get(evidence.source_id)
             quote = evidence.quote.strip()
-            if source is None or not quote or quote not in source.content:
+            quote = _source_quote(quote, source.content) if source is not None else None
+            if quote is None:
                 raise QAError("invalid_citation", "Answer citation validation failed", 502)
             if evidence.source_id not in source_ids:
                 source_ids.append(evidence.source_id)

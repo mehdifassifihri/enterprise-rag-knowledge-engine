@@ -273,6 +273,7 @@ def test_database_errors_are_sanitized(settings, monkeypatch):
 
 
 def test_observability_excludes_private_text(settings, monkeypatch, caplog):
+    caplog.set_level("INFO", logger="enterprise_knowledge_engine.qa.service")
     private = "CONFIDENTIAL_DOCUMENT_CANARY for testing."
     monkeypatch.setattr(
         "enterprise_knowledge_engine.qa.service.search",
@@ -318,3 +319,31 @@ def test_observability_excludes_private_text(settings, monkeypatch, caplog):
 def test_ask_input_validation(payload):
     with pytest.raises(ValidationError):
         AskRequest.model_validate(payload)
+
+
+@pytest.mark.parametrize("separator", ["\n", "\r\n", "  ", "\t", "\u00a0"])
+def test_citation_layout_whitespace_returns_original_source(settings, separator):
+    original = "Refund requests" + separator + "require approval."
+    context = build_context([result(content=original)], settings)
+    output = GeneratedAnswer.model_validate_json(
+        answer_json(quote="Refund requests require approval.")
+    )
+    _, citations = validate_and_render(output, context)
+    assert citations[0].excerpt == original
+    assert citations[0].supporting_quotes == [original]
+
+
+@pytest.mark.parametrize(
+    "quote",
+    [
+        "Refund requests do not require approval.",
+        "refund requests require approval.",
+        "Refund requests require approval!",
+        "Refund requests approval.",
+    ],
+)
+def test_citation_whitespace_matching_rejects_changed_words(settings, quote):
+    context = build_context([result(content="Refund requests\nrequire approval.")], settings)
+    output = GeneratedAnswer.model_validate_json(answer_json(quote=quote))
+    with pytest.raises(QAError):
+        validate_and_render(output, context)

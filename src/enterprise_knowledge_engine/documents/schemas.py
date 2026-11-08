@@ -28,3 +28,27 @@ class DocumentList(BaseModel):
     items: list[DocumentResponse]
     limit: int
     offset: int
+
+
+class DocumentStats(BaseModel):
+    documents: int
+    ready: int
+    failed: int
+    chunks: int
+
+
+class ChunkPreview(BaseModel):
+    id: UUID
+    document_id: UUID
+    position: int
+    content: str
+    page_number: int | None
+    start_offset: int | None
+    end_offset: int | None
+    truncated: bool
+
+
+class ChunkPage(BaseModel):
+    items: list[ChunkPreview]
+    limit: int
+    offset: int
