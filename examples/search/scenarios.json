@@ -1,0 +1,18 @@
+[
+  {
+    "query": "refund policy",
+    "explanation": "The general reimbursement text expresses the meaning without those exact words; the hardware page has the literal terms. Compare semantic and keyword candidates before fusion."
+  },
+  {
+    "query": "QX-9000",
+    "explanation": "The exact identifier distinguishes a hardware product from QX-9001; keyword evidence can rescue it when generic semantic similarity is ambiguous."
+  },
+  {
+    "query": "money back",
+    "explanation": "A phrase shared with the general reimbursement policy produces both vector and keyword evidence."
+  },
+  {
+    "query": "subscription cancellation",
+    "explanation": "A separate topic should lead to the billing document instead of a hardware policy."
+  }
+]

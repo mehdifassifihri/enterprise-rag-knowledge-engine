@@ -1,0 +1,43 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13"]
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: eke
+          POSTGRES_PASSWORD: ci-only-password
+          POSTGRES_DB: eke_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U eke -d eke_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql+psycopg://eke:ci-only-password@localhost:5432/eke_test
+      API_KEY: ci-only-api-key-for-disposable-tests-12345
+      RUN_DB_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -r requirements-dev.lock
+      - run: pip install --no-deps -e .
+      - run: pip check
+      - run: python scripts/check_secrets.py
+      - run: pip-audit -r requirements-dev.lock --disable-pip --no-deps --progress-spinner off
+      - run: python -m enterprise_knowledge_engine.evaluation.runner --validate-only
+      - run: ruff check . && ruff format --check .
+      - run: alembic upgrade head
+      - run: alembic check
+      - run: pytest
+      - run: alembic downgrade base && alembic upgrade head
+      - run: docker build -t enterprise-knowledge-engine:ci .

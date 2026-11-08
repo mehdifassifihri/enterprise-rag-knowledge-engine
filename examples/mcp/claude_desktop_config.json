@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "enterprise-knowledge": {
+      "command": "/absolute/path/advanced-rag/.venv/bin/python",
+      "args": [
+        "-m",
+        "enterprise_knowledge_engine.mcp",
+        "--env-file",
+        "/absolute/path/advanced-rag/.env"
+      ]
+    }
+  }
+}

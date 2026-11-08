@@ -1,0 +1,37 @@
+[
+  {
+    "case": "A",
+    "question": "What is the retail returns policy?",
+    "expected_status": "answered",
+    "expected_sources": 1,
+    "fixture_fact_selectors": [
+      "retail returns"
+    ]
+  },
+  {
+    "case": "B",
+    "question": "What is the retail returns policy and how do I submit the order information?",
+    "expected_status": "answered",
+    "expected_sources": 2,
+    "fixture_fact_selectors": [
+      "retail returns",
+      "order number"
+    ]
+  },
+  {
+    "case": "C",
+    "question": "What is the executive bonus amount?",
+    "expected_status": "insufficient_evidence",
+    "expected_sources": 0,
+    "fixture_fact_selectors": []
+  },
+  {
+    "case": "D",
+    "question": "What is the device service requirement?",
+    "expected_status": "answered",
+    "expected_sources": 1,
+    "fixture_fact_selectors": [
+      "device service"
+    ]
+  }
+]

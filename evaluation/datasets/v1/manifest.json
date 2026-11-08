@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "documents": [
+    {
+      "label": "refunds",
+      "tenant": "a",
+      "path": "documents/refunds.md"
+    },
+    {
+      "label": "portal",
+      "tenant": "a",
+      "path": "documents/portal.md"
+    },
+    {
+      "label": "sla",
+      "tenant": "a",
+      "path": "documents/sla.md"
+    },
+    {
+      "label": "sso",
+      "tenant": "a",
+      "path": "documents/sso.md"
+    },
+    {
+      "label": "retention",
+      "tenant": "a",
+      "path": "documents/retention.md"
+    },
+    {
+      "label": "billing",
+      "tenant": "a",
+      "path": "documents/billing.md"
+    },
+    {
+      "label": "limits",
+      "tenant": "a",
+      "path": "documents/limits.md"
+    },
+    {
+      "label": "export",
+      "tenant": "a",
+      "path": "documents/export.md"
+    },
+    {
+      "label": "maintenance-a",
+      "tenant": "a",
+      "path": "documents/maintenance-a.md"
+    },
+    {
+      "label": "maintenance-b",
+      "tenant": "a",
+      "path": "documents/maintenance-b.md"
+    },
+    {
+      "label": "malicious",
+      "tenant": "a",
+      "path": "documents/malicious.md"
+    },
+    {
+      "label": "private-refunds",
+      "tenant": "b",
+      "path": "documents/private-refunds.md"
+    }
+  ]
+}

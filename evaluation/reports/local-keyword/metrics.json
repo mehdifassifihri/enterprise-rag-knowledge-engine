@@ -1,0 +1,1229 @@
+{
+  "run_started_at": "2026-11-08T00:31:11.522242+00:00",
+  "run_finished_at": "2026-11-08T00:31:11.749691+00:00",
+  "environment": {
+    "python": "3.13.9",
+    "postgresql": "16.11",
+    "pgvector_extension": "0.8.1"
+  },
+  "dataset_version": "1.0.0",
+  "dataset_sha256": "42bdb2da2b3e46868b61fad519f8cb66c8e9ce53ea0b363a341be14deb736ba1",
+  "question_count": 34,
+  "strategies": {
+    "vector": {
+      "status": "pending",
+      "reason": "real embeddings or explicit paid authorization unavailable"
+    },
+    "keyword": {
+      "status": "completed"
+    },
+    "hybrid": {
+      "status": "pending",
+      "reason": "real embeddings or explicit paid authorization unavailable"
+    },
+    "hybrid_rerank": {
+      "status": "pending",
+      "reason": "real embeddings or explicit paid authorization unavailable"
+    }
+  },
+  "document_id_to_label": {
+    "1a5c50f4-e5c1-4826-83f9-aaa0ea852159": "refunds",
+    "20c83119-78b1-46af-8640-1093aa0fab03": "portal",
+    "4edb30f5-dbb8-46f1-9f45-8ac5dede533a": "sla",
+    "4df23b6a-297a-42cc-ac95-40b99373d1d4": "sso",
+    "341f06a0-b3dd-4317-973b-8ea608b50115": "retention",
+    "a2b5718e-2d54-44c7-8a83-1109d671f84e": "billing",
+    "9e36c07e-512b-4c0f-8034-8a0a40a9e2c5": "limits",
+    "d369439a-a3f0-4957-8328-91a2e707c196": "export",
+    "81faa075-fb01-4ea3-87cd-b021a7799f8f": "maintenance-a",
+    "827ff04c-0289-44f7-9ea1-6782f65177b9": "maintenance-b",
+    "a67fdd78-dcb0-4cdc-9f22-224d7909322c": "malicious",
+    "24054f04-af96-49e5-8532-d03b74da0873": "private-refunds"
+  },
+  "configuration": {
+    "embedding_provider": "none_keyword_only",
+    "embedding_model": null,
+    "embedding_dimensions": null,
+    "chunk_size": 1500,
+    "chunk_overlap": 200,
+    "candidate_limit": 50,
+    "rrf_k": 60,
+    "vector_strategy": "exact",
+    "reranker_model": null,
+    "answer_calls": 0,
+    "judge_model": null,
+    "max_answer_calls": 10,
+    "max_judge_calls": 5,
+    "answer_model": null,
+    "provider_and_context_settings": {
+      "embedding_batch_size": 32,
+      "embedding_timeout_seconds": 20.0,
+      "embedding_max_retries": 1,
+      "llm_timeout_seconds": 30.0,
+      "llm_max_retries": 1,
+      "llm_max_output_tokens": 1200,
+      "qa_max_sources": 8,
+      "qa_context_char_budget": 12000,
+      "qa_max_passage_chars": 2000,
+      "qa_min_cosine_similarity": 0.2,
+      "qa_min_keyword_score": 0.0,
+      "search_hnsw_ef_search": 100,
+      "reranker_max_candidates": 50,
+      "reranker_timeout_seconds": 10.0
+    }
+  },
+  "runtime_versions": {
+    "sqlalchemy": "2.0.57",
+    "pgvector": "0.5.1",
+    "openai": "2.54.0",
+    "mcp": "1.30.0"
+  },
+  "answer_metrics": {
+    "keyword": {
+      "abstention_correct": {
+        "value": null,
+        "denominator": 0
+      },
+      "reference_exact_match": {
+        "value": null,
+        "denominator": 0
+      },
+      "citation_validity": {
+        "value": null,
+        "denominator": 0
+      },
+      "quote_membership": {
+        "value": null,
+        "denominator": 0
+      },
+      "forbidden_output_detected": {
+        "value": null,
+        "denominator": 0
+      }
+    }
+  },
+  "latency": {
+    "keyword": {
+      "requests": 34,
+      "average_ms": 1.1618529411764706,
+      "p50_ms": 1.075,
+      "p95_ms": 1.29095
+    }
+  },
+  "metrics": {
+    "keyword": {
+      "overall": {
+        "mrr": {
+          "value": 0.19230769230769232,
+          "denominator": 26
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 8,
+        "queries": 34,
+        "zero_relevance_queries": 8,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.14743589743589744,
+              "denominator": 26
+            },
+            "precision": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            },
+            "mrr": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            },
+            "ndcg": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            },
+            "hit_rate": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 0.16666666666666666,
+              "denominator": 26
+            },
+            "precision": {
+              "value": 0.07692307692307693,
+              "denominator": 26
+            },
+            "mrr": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            },
+            "ndcg": {
+              "value": 0.17189533561625986,
+              "denominator": 26
+            },
+            "hit_rate": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 0.16666666666666666,
+              "denominator": 26
+            },
+            "precision": {
+              "value": 0.04615384615384616,
+              "denominator": 26
+            },
+            "mrr": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            },
+            "ndcg": {
+              "value": 0.17189533561625986,
+              "denominator": 26
+            },
+            "hit_rate": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 0.16666666666666666,
+              "denominator": 26
+            },
+            "precision": {
+              "value": 0.02307692307692308,
+              "denominator": 26
+            },
+            "mrr": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            },
+            "ndcg": {
+              "value": 0.17189533561625986,
+              "denominator": 26
+            },
+            "hit_rate": {
+              "value": 0.19230769230769232,
+              "denominator": 26
+            }
+          }
+        }
+      },
+      "ambiguous": {
+        "mrr": {
+          "value": 1.0,
+          "denominator": 1
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 1,
+        "queries": 2,
+        "zero_relevance_queries": 1,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.3333333333333333,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 0.3333333333333333,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.3333333333333333,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 0.4692787260227565,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 0.3333333333333333,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.2,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 0.4692787260227565,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 0.3333333333333333,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.1,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 0.4692787260227565,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          }
+        }
+      },
+      "conflicting_evidence": {
+        "mrr": {
+          "value": 1.0,
+          "denominator": 1
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 0,
+        "queries": 1,
+        "zero_relevance_queries": 0,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.5,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.6666666666666666,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.4,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.2,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          }
+        }
+      },
+      "exact_identifier": {
+        "mrr": {
+          "value": 0.0,
+          "denominator": 5
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 0,
+        "queries": 5,
+        "zero_relevance_queries": 0,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 5
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 5
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 5
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 5
+            }
+          }
+        }
+      },
+      "missing_information": {
+        "mrr": {
+          "value": null,
+          "denominator": 0
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 3,
+        "queries": 3,
+        "zero_relevance_queries": 3,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": null,
+              "denominator": 0
+            },
+            "precision": {
+              "value": null,
+              "denominator": 0
+            },
+            "mrr": {
+              "value": null,
+              "denominator": 0
+            },
+            "ndcg": {
+              "value": null,
+              "denominator": 0
+            },
+            "hit_rate": {
+              "value": null,
+              "denominator": 0
+            }
+          },
+          "3": {
+            "recall": {
+              "value": null,
+              "denominator": 0
+            },
+            "precision": {
+              "value": null,
+              "denominator": 0
+            },
+            "mrr": {
+              "value": null,
+              "denominator": 0
+            },
+            "ndcg": {
+              "value": null,
+              "denominator": 0
+            },
+            "hit_rate": {
+              "value": null,
+              "denominator": 0
+            }
+          },
+          "5": {
+            "recall": {
+              "value": null,
+              "denominator": 0
+            },
+            "precision": {
+              "value": null,
+              "denominator": 0
+            },
+            "mrr": {
+              "value": null,
+              "denominator": 0
+            },
+            "ndcg": {
+              "value": null,
+              "denominator": 0
+            },
+            "hit_rate": {
+              "value": null,
+              "denominator": 0
+            }
+          },
+          "10": {
+            "recall": {
+              "value": null,
+              "denominator": 0
+            },
+            "precision": {
+              "value": null,
+              "denominator": 0
+            },
+            "mrr": {
+              "value": null,
+              "denominator": 0
+            },
+            "ndcg": {
+              "value": null,
+              "denominator": 0
+            },
+            "hit_rate": {
+              "value": null,
+              "denominator": 0
+            }
+          }
+        }
+      },
+      "multi_document": {
+        "mrr": {
+          "value": 0.0,
+          "denominator": 4
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 0,
+        "queries": 4,
+        "zero_relevance_queries": 0,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 4
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 4
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 4
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 4
+            }
+          }
+        }
+      },
+      "paraphrase": {
+        "mrr": {
+          "value": 0.0,
+          "denominator": 4
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 0,
+        "queries": 4,
+        "zero_relevance_queries": 0,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 4
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 4
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 4
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 4
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 4
+            }
+          }
+        }
+      },
+      "prompt_injection": {
+        "mrr": {
+          "value": 0.0,
+          "denominator": 2
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 1,
+        "queries": 3,
+        "zero_relevance_queries": 1,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 2
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 2
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 2
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 2
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 2
+            }
+          }
+        }
+      },
+      "semantic": {
+        "mrr": {
+          "value": 0.0,
+          "denominator": 5
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 0,
+        "queries": 5,
+        "zero_relevance_queries": 0,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 5
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 5
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 5
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "precision": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "mrr": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "ndcg": {
+              "value": 0.0,
+              "denominator": 5
+            },
+            "hit_rate": {
+              "value": 0.0,
+              "denominator": 5
+            }
+          }
+        }
+      },
+      "technical": {
+        "mrr": {
+          "value": 0.6666666666666666,
+          "denominator": 3
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 0,
+        "queries": 3,
+        "zero_relevance_queries": 0,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "precision": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "mrr": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "ndcg": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "hit_rate": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "precision": {
+              "value": 0.2222222222222222,
+              "denominator": 3
+            },
+            "mrr": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "ndcg": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "hit_rate": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "precision": {
+              "value": 0.13333333333333333,
+              "denominator": 3
+            },
+            "mrr": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "ndcg": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "hit_rate": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "precision": {
+              "value": 0.06666666666666667,
+              "denominator": 3
+            },
+            "mrr": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "ndcg": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            },
+            "hit_rate": {
+              "value": 0.6666666666666666,
+              "denominator": 3
+            }
+          }
+        }
+      },
+      "tenant_isolation": {
+        "mrr": {
+          "value": 1.0,
+          "denominator": 1
+        },
+        "negative_queries_returning_any": 0,
+        "negative_query_success_denominator": 3,
+        "queries": 4,
+        "zero_relevance_queries": 3,
+        "errors": 0,
+        "at_k": {
+          "1": {
+            "recall": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "3": {
+            "recall": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.3333333333333333,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "5": {
+            "recall": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.2,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          },
+          "10": {
+            "recall": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "precision": {
+              "value": 0.1,
+              "denominator": 1
+            },
+            "mrr": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "ndcg": {
+              "value": 1.0,
+              "denominator": 1
+            },
+            "hit_rate": {
+              "value": 1.0,
+              "denominator": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "policy": "Labels; macro mean over queries with relevance. Failures score zero, zero-relevance queries excluded. Precision denominator K; cutoff and pool MRR reported."
+}
